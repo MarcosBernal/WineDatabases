@@ -1,12 +1,14 @@
 import exercise3.JDBCConnector;
+import exercise4.BatchQuery;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
 public class AssignmentSolver {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws Exception {
         HashMap<String, String> expected_args = argscheck_args(args);
         int number = -1;
         while(number != 0) {
@@ -25,7 +27,7 @@ public class AssignmentSolver {
         }
     }
 
-    public static void do_exercise(int number, HashMap<String, String> expected_args) throws SQLException {
+    public static void do_exercise(int number, HashMap<String, String> expected_args) throws SQLException, IOException {
         switch(number){
             case 1:
             case 2: System.out.println("No done yet D:");
@@ -39,6 +41,11 @@ public class AssignmentSolver {
                 System.out.println("Exercise 3 complete!!");
                 break;
             case 4:
+                BatchQuery myQueryBatch = new BatchQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                myQueryBatch.insertWineScoringBatchQuery("wine_scoring_guide.data.csv");
+                myQueryBatch.insertWineScoringBatchQuery("wine_user_review.data.csv");
+                System.out.println("Exercise 4 complete!!");
+                break;
             case 5:
             case 6:
             case 7:

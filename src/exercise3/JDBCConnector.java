@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class JDBCConnector {
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private Connection conn;
+    protected Connection conn;
 
 
     public JDBCConnector(String host, String password, String database)
