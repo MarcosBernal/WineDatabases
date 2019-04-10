@@ -42,8 +42,9 @@ public class AssignmentSolver {
                 break;
             case 4:
                 BatchQuery myQueryBatch = new BatchQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
-                myQueryBatch.insertWineScoringBatchQuery("wine_scoring_guide.data.csv");
-                myQueryBatch.insertWineScoringBatchQuery("wine_user_review.data.csv");
+
+                myQueryBatch.insertWineScoringBatchQuery("src/exercise4/wine_scoring_guide.data.csv", ";");
+                myQueryBatch.insertWineScoringBatchQuery("src/exercise4/wine_user_review.data.csv", ";");
                 System.out.println("Exercise 4 complete!!");
                 break;
             case 5:
