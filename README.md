@@ -37,6 +37,14 @@ With the classpath:
 
 ## Exercises
 
+Deployment:
+    
+    bash deployment.sh
+    
+Test exercises:
+    
+    bash execute.sh
+
 #### Exercise 1
 ...
 #### Exercise 2

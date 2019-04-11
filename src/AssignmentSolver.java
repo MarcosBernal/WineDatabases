@@ -33,7 +33,7 @@ public class AssignmentSolver {
             case 2: System.out.println("No done yet D:");
                     break;
             case 3:
-                JDBCConnector myJdbc = new JDBCConnector(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                JDBCConnector myJdbc = new JDBCConnector(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"), null);
                 ResultSet result3 = myJdbc.executeQuery("SELECT count(*) from user");
                 while(result3.next())
                     System.out.println("There are " + result3.getInt("count(*)") + " users");
@@ -41,10 +41,13 @@ public class AssignmentSolver {
                 System.out.println("Exercise 3 complete!!");
                 break;
             case 4:
-                BatchQuery myQueryBatch = new BatchQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                BatchQuery myQueryBatch = new BatchQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"), 50000);
+
+                myQueryBatch.insertWineUserReviewBatchQuery("src/exercise4/wine_user_review.data.csv", ";");
 
                 myQueryBatch.insertWineScoringBatchQuery("src/exercise4/wine_scoring_guide.data.csv", ";");
-                myQueryBatch.insertWineScoringBatchQuery("src/exercise4/wine_user_review.data.csv", ";");
+                System.out.println("Uploaded wine_scoring_guide!!");
+
                 System.out.println("Exercise 4 complete!!");
                 break;
             case 5:

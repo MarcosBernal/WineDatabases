@@ -6,70 +6,135 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 
 public class BatchQuery extends JDBCConnector {
 
-    public BatchQuery(String host, String password, String database) {
-        super(host, password, database);
+    private int batchSize;
+
+    public BatchQuery(String host, String password, String database, int batchSize) {
+        super(host, password, database, "?rewriteBatchedStatements=true");
+        this.batchSize = batchSize;
+
     }
 
     public void insertWineScoringBatchQuery(String pathFile, String delimiter) throws IOException, SQLException {
 
         BufferedReader reader = new BufferedReader(new FileReader(pathFile));
-        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_scoring_guide " +
+
+        PreparedStatement statement = this.conn.prepareStatement("INSERT IGNORE INTO wine_scoring_guide " +
                 "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)");
+
+//        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_scoring_guide " +
+//                "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)"+
+//                    "ON DUPLICATE KEY UPDATE " +
+//                "date = COALESCE( VALUES(date), date)," +
+//                "price = COALESCE( VALUES(price), price)");
 
         String line;
         int i = 0;
         reader.readLine(); // Removing header
-        Date date_format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
 
         while ((line = reader.readLine()) != null) {
-            System.out.println(line);
             String[] values = line.trim().replaceAll("\"","").split(delimiter);
-            System.out.println(values[0] + values[1] + values[2] + values[3] + values[4]);
-            statement.setInt(1, Integer.parseInt(values[0]));
-            statement.setInt(2, Integer.parseInt(values[1]));
-            statement.setDate(3, date_format.parse(values[2]));
-            statement.setDouble(4, Double.parseDouble(values[3]));
-            statement.setDouble(5, Double.parseDouble(values[4]));
+            if (values.length < 5)
+                continue;
+            try {
+                statement.setInt(1, Integer.parseInt(values[0]));
+            } catch (java.lang.NumberFormatException e) {
+                continue; //Not value in having a null wine scored
+                //statement.setNull(1, Types.DECIMAL);
+            }
+            try {
+                statement.setInt(2, Integer.parseInt(values[1]));
+            } catch (java.lang.NumberFormatException e) {
+                continue; //Not value in having a score without taster ref
+                //statement.setNull(2, Types.DECIMAL);
+            }
+            try {
+                statement.setDate(3, new java.sql.Date(date_format.parse(values[2]).getTime()));
+            } catch (ParseException e) {
+                statement.setNull(3, Types.DATE);
+            }
+            try {
+                statement.setDouble(4, Double.parseDouble(values[3]));
+            } catch (java.lang.NumberFormatException e) {
+                continue; //Not value in having a score without score points
+                //statement.setNull(4, Types.DECIMAL);
+            }
+            try {
+                statement.setDouble(5, Double.parseDouble(values[4]));
+            } catch (java.lang.NumberFormatException e) {
+                statement.setNull(5, Types.DECIMAL);
+            }
 
             i++;
 
             statement.addBatch();
 
-            if (i % 1000 == 0 || !reader.ready()) {
-                statement.executeBatch(); // Execute every 1000 items.
+            if (i % batchSize == 0 || !reader.ready()) {
+                statement.executeLargeBatch(); // Execute every 1000 items
+                System.out.println(LocalDateTime.now() + ": Iteration number: " + i);
             }
         }
+
+        statement.executeBatch();
     }
 
     public void insertWineUserReviewBatchQuery(String pathFile, String delimiter) throws IOException, SQLException {
 
         BufferedReader reader = new BufferedReader(new FileReader(pathFile));
-        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_scoring_guide " +
-                "(wine_id, user_id, date, score) VALUES (?, ?, ?, ?)");
+        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_user_review " +
+                "(wine_id, user_id, date, score) VALUES (?, ?, ?, ?)" +
+                        "ON DUPLICATE KEY UPDATE " +
+                "date = COALESCE( VALUES(date), date)");
 
         String line;
         int i = 0;
         reader.readLine(); // Removing header
+        SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd hh:MM:ss");
+
         while ((line = reader.readLine()) != null) {
-            System.out.println(line);
             String[] values = line.trim().replaceAll("\"","").split(delimiter);
-            statement.setInt(1, Integer.parseInt(values[0]));
-            statement.setInt(2, Integer.parseInt(values[1]));
-            statement.setDate(3, Date.valueOf(values[2]));
-            statement.setDouble(4, Double.parseDouble(values[3]));
+            try {
+                statement.setInt(1, Integer.parseInt(values[0]));
+            } catch (java.lang.NumberFormatException e) {
+                continue; //Not value in having a null wine scored
+                //statement.setNull(1, Types.DECIMAL);
+            }
+            try {
+                statement.setInt(2, Integer.parseInt(values[1]));
+            } catch (java.lang.NumberFormatException e) {
+                continue; //Not value in having a score without taster ref
+                //statement.setNull(2, Types.DECIMAL);
+            }
+            try {
+                statement.setDate(3, new java.sql.Date(date_format.parse(values[2]).getTime()));
+            } catch (ParseException e) {
+                statement.setNull(3, Types.DATE);
+            }
+            try {
+                statement.setDouble(4, Double.parseDouble(values[3]));
+            } catch (java.lang.NumberFormatException e) {
+                continue; //Not value in having a score without score points
+                //statement.setNull(4, Types.DECIMAL);
+            }
 
             i++;
 
             statement.addBatch();
 
-            if (i % 1000 == 0 || !reader.ready()) {
-                statement.executeBatch(); // Execute every 1000 items.
+            if (i % batchSize == 0 || !reader.ready()) {
+                statement.executeLargeBatch(); // Execute every 1000 items
+                System.out.println(LocalDateTime.now() + ": Iteration number: " + i);
             }
         }
+
+        statement.executeBatch();
     }
 
 

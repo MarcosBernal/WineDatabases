@@ -11,15 +11,16 @@ public class JDBCConnector {
     protected Connection conn;
 
 
-    public JDBCConnector(String host, String password, String database)
+    public JDBCConnector(String host, String password, String database, String options)
     {
         try {
             Class.forName(JDBC_DRIVER);
-            String url = "jdbc:mysql://" + host +":3306/" + database;
+            String url = "jdbc:mysql://" + host +":3306/" + database + options;
             System.out.println("Connecting to " + url);
             this.conn = DriverManager.getConnection(url,"root", password);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.exit(1);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.exit(1);
