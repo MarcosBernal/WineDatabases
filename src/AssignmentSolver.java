@@ -1,5 +1,6 @@
 import exercise3.JDBCConnector;
 import exercise4.BatchQuery;
+import exercise5.CustomQuery;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -51,6 +52,10 @@ public class AssignmentSolver {
                 System.out.println("Exercise 4 complete!!");
                 break;
             case 5:
+                CustomQuery myCustomQuery = new CustomQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                int numberOfWines = myCustomQuery.getNumberOfInstances("wine", "wine_id");
+                System.out.println("Number of wines registries: " + numberOfWines);
+                break;
             case 6:
             case 7:
             case 8:
