@@ -32,11 +32,18 @@ Using an IDE, tool such as maven.
 
 With the classpath:
 
-    cd ..
     java -cp mysql-connector-java-8.0.15.jar:build/ AssignmentSolver localhost secret cataVino
 
 
 ## Exercises
+
+Deployment:
+    
+    bash deployment.sh
+    
+Test exercises:
+    
+    bash execute.sh
 
 #### Exercise 1
 ...

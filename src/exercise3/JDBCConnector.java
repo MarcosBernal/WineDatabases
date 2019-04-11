@@ -8,18 +8,20 @@ import java.sql.SQLException;
 public class JDBCConnector {
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private Connection conn;
+    protected Connection conn;
 
 
-    public JDBCConnector(String host, String password, String database)
+    public JDBCConnector(String host, String password, String database, String options)
     {
+        String urlOptions = (options != null) ? options : "";
         try {
             Class.forName(JDBC_DRIVER);
-            String url = "jdbc:mysql://" + host +":3306/" + database;
+            String url = "jdbc:mysql://" + host +":3306/" + database + urlOptions;
             System.out.println("Connecting to " + url);
             this.conn = DriverManager.getConnection(url,"root", password);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.exit(1);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.exit(1);

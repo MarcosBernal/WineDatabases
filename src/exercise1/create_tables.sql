@@ -67,7 +67,7 @@ FOREIGN KEY (region_id) REFERENCES region(region_id)
 CREATE TABLE cataVino.`wine_user_review` (
 wine_id INT UNIQUE NOT NULL,
 user_id INT UNIQUE NOT NULL,
-date DATETIME NULL,
+date DATETIME,
 score DECIMAL(10,2),
 PRIMARY KEY (wine_id, user_id),
 CONSTRAINT FK_user_user_id FOREIGN KEY(user_id) REFERENCES user(user_id),
@@ -78,7 +78,7 @@ CREATE TABLE cataVino.`wine_scoring_guide` (
 wine_id INT NOT NULL,
 taster_id INT NOT NULL,
 date DATETIME,
-score DECIMAL(10,2),
+score DECIMAL(10,2) NOT NULL,
 price DECIMAL(10,2),
 PRIMARY KEY(wine_id),
 CONSTRAINT FK_wine_wine_id
