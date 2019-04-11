@@ -25,14 +25,14 @@ public class BatchQuery extends JDBCConnector {
 
         BufferedReader reader = new BufferedReader(new FileReader(pathFile));
 
-        PreparedStatement statement = this.conn.prepareStatement("INSERT IGNORE INTO wine_scoring_guide " +
-                "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)");
+//        PreparedStatement statement = this.conn.prepareStatement("INSERT IGNORE INTO wine_scoring_guide " +
+//                "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)");
 
-//        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_scoring_guide " +
-//                "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)"+
-//                    "ON DUPLICATE KEY UPDATE " +
-//                "date = COALESCE( VALUES(date), date)," +
-//                "price = COALESCE( VALUES(price), price)");
+        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_scoring_guide " +
+                "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)"+
+                    "ON DUPLICATE KEY UPDATE " +
+                "date = COALESCE( VALUES(date), date)," +
+                "price = COALESCE( VALUES(price), price)");
 
         String line;
         int i = 0;
@@ -78,7 +78,7 @@ public class BatchQuery extends JDBCConnector {
 
             if (i % batchSize == 0 || !reader.ready()) {
                 statement.executeLargeBatch(); // Execute every 1000 items
-                System.out.println(LocalDateTime.now() + ": Iteration number: " + i);
+                System.out.println(LocalDateTime.now() + ": Iteration number: " + i + " - " + (i/103727.0)*100+ "%");
             }
         }
 
@@ -88,10 +88,12 @@ public class BatchQuery extends JDBCConnector {
     public void insertWineUserReviewBatchQuery(String pathFile, String delimiter) throws IOException, SQLException {
 
         BufferedReader reader = new BufferedReader(new FileReader(pathFile));
-        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_user_review " +
-                "(wine_id, user_id, date, score) VALUES (?, ?, ?, ?)" +
-                        "ON DUPLICATE KEY UPDATE " +
-                "date = COALESCE( VALUES(date), date)");
+//        PreparedStatement statement = this.conn.prepareStatement("INSERT INTO wine_user_review " +
+//                "(wine_id, user_id, date, score) VALUES (?, ?, ?, ?)" +
+//                        "ON DUPLICATE KEY UPDATE " +
+//                "date = COALESCE( VALUES(date), date)");
+        PreparedStatement statement = this.conn.prepareStatement("INSERT IGNORE INTO wine_user_review " +
+                "(wine_id, user_id, date, score) VALUES (?, ?, ?, ?)");
 
         String line;
         int i = 0;
@@ -130,7 +132,7 @@ public class BatchQuery extends JDBCConnector {
 
             if (i % batchSize == 0 || !reader.ready()) {
                 statement.executeLargeBatch(); // Execute every 1000 items
-                System.out.println(LocalDateTime.now() + ": Iteration number: " + i);
+                System.out.println(LocalDateTime.now() + ": Iteration number: " + i + " - " + (i/2378214.0)*100 + "%");
             }
         }
 

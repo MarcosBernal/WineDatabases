@@ -13,9 +13,10 @@ public class JDBCConnector {
 
     public JDBCConnector(String host, String password, String database, String options)
     {
+        String urlOptions = (options != null) ? options : "";
         try {
             Class.forName(JDBC_DRIVER);
-            String url = "jdbc:mysql://" + host +":3306/" + database + options;
+            String url = "jdbc:mysql://" + host +":3306/" + database + urlOptions;
             System.out.println("Connecting to " + url);
             this.conn = DriverManager.getConnection(url,"root", password);
         } catch (SQLException e) {

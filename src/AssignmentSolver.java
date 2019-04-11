@@ -22,8 +22,6 @@ public class AssignmentSolver {
             }
             if (number > 0 && number < 10)
                 do_exercise(number, expected_args);
-
-            number = -0;
         }
     }
 
@@ -43,10 +41,12 @@ public class AssignmentSolver {
             case 4:
                 BatchQuery myQueryBatch = new BatchQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"), 50000);
 
+                System.out.println(">> Uploading wine_scoring_guide!!");
+                myQueryBatch.insertWineScoringBatchQuery("src/exercise4/wine_scoring_guide.data.csv", ";");
+
+                System.out.println(">> Uploading wine_user_review!!");
                 myQueryBatch.insertWineUserReviewBatchQuery("src/exercise4/wine_user_review.data.csv", ";");
 
-                myQueryBatch.insertWineScoringBatchQuery("src/exercise4/wine_scoring_guide.data.csv", ";");
-                System.out.println("Uploaded wine_scoring_guide!!");
 
                 System.out.println("Exercise 4 complete!!");
                 break;
