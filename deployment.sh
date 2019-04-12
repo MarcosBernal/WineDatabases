@@ -7,7 +7,7 @@ DDBB=cataVino
 
 if ! docker ps | grep -q ${C_NAME} ; then
     docker run -d --rm -e MYSQL_ROOT_PASSWORD=$PASSWD -p 3306:3306 -v ${DIR_PATH}/src:/tmp/src:ro --name=${C_NAME} mysql
-    sleep 15
+    sleep 25
     echo "Mysql up and running!"
 else
     mysql -h localhost --protocol=tcp -u root -p${PASSWD} -e "drop database ${DDBB}" > /dev/null

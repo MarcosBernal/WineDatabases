@@ -5,7 +5,9 @@ import exercise5.CustomQuery;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class AssignmentSolver {
 
@@ -55,6 +57,26 @@ public class AssignmentSolver {
                 CustomQuery myCustomQuery = new CustomQuery(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
                 int numberOfWines = myCustomQuery.getNumberOfInstances("wine", "wine_id");
                 System.out.println("Number of wines registries: " + numberOfWines);
+
+                ResultSet wine1 = myCustomQuery.getWineFromNameAndDescription("Quinta dos Avidagos 2011 Avidagos Red (Douro)", null);
+                while(wine1.next())
+                    System.out.println("Found wine name: " + wine1.getString("title") + " with designation: " + wine1.getString("designation"));
+
+                ResultSet wine2 = myCustomQuery.getWineFromNameAndDescription(null, "Aromas include tropical fruit, broom, brimstone and dried herb. The palate isn\\'t overly expressive, offering unripened apple, citrus and dried sage alongside brisk acidity.");
+                while(wine2.next())
+                    System.out.println("Found wine name: " + wine2.getString("title") + " with designation: " + wine2.getString("designation"));
+
+                int wine_id = 1;
+                Iterator<Double> wineScoreListIterator = myCustomQuery.filterWineScoreListById(wine_id).iterator();
+                System.out.print("Score list of wine with id: " + wine_id + " {");
+                while(wineScoreListIterator.hasNext())
+                    System.out.print(wineScoreListIterator.next() + ", ");
+                System.out.println("}");
+
+                HashMap<String, Double> scores = myCustomQuery.getNumberOfReviewsAndMeanScore();
+                System.out.println("From " + scores.get("nreviews").intValue() + " scores with a mean of " + scores.get("mean"));
+
+                System.out.println("Wine id: " + wine_id + " has " + myCustomQuery.getScoreOfWineId(wine_id) + " in average");
                 break;
             case 6:
             case 7:
