@@ -55,12 +55,9 @@ designation VARCHAR(255),
 winery_id INT NOT NULL,
 region_id INT,
 PRIMARY KEY (wine_id),
-CONSTRAINT FK_grape_variety_grape_variety_id
-FOREIGN KEY (grape_variety_id) REFERENCES grape_variety(grape_variety_id),
-CONSTRAINT FK_winery_winery_id
-FOREIGN KEY (winery_id) REFERENCES winery(winery_id),
-CONSTRAINT FK_region_region_id
-FOREIGN KEY (region_id) REFERENCES region(region_id)
+CONSTRAINT FK_grape_variety_grape_variety_id FOREIGN KEY (grape_variety_id) REFERENCES grape_variety(grape_variety_id),
+CONSTRAINT FK_winery_winery_id FOREIGN KEY (winery_id) REFERENCES winery(winery_id),
+CONSTRAINT FK_region_region_id FOREIGN KEY (region_id) REFERENCES region(region_id)
 );
 
 
@@ -80,7 +77,7 @@ taster_id INT NOT NULL,
 date DATETIME,
 score DECIMAL(10,2) NOT NULL,
 price DECIMAL(10,2),
-PRIMARY KEY(wine_id),
-CONSTRAINT FK_wine_wine_id
-FOREIGN KEY (wine_id) REFERENCES wine(wine_id)
+PRIMARY KEY(wine_id, taster_id),
+CONSTRAINT FK_wine_wine_id FOREIGN KEY (wine_id) REFERENCES wine(wine_id),
+CONSTRAINT FK_taster_taster_id FOREIGN KEY (taster_id) REFERENCES taster(taster_id)
 );
