@@ -26,7 +26,7 @@ public class Wine {
         return wine_id;
     }
 
-    public String getName() {
+    public String getName() { // All name are null => therefore we will use title
         return name;
     }
 
@@ -85,14 +85,14 @@ public class Wine {
             e.printStackTrace();
         }
         try {
-            this.name = queryResult.getString("name");
+            this.name = queryResult.getString("title"); // All name are null => therefore we will use title
         } catch (SQLException e) {
-            this.designation = null;
+            this.name = null;
         }
         try {
             this.description = queryResult.getString("description");
         } catch (SQLException e) {
-            this.designation = null;
+            this.description = null;
         }
         try {
             this.grape_variety_id = queryResult.getInt("grape_variety_id");
@@ -118,6 +118,6 @@ public class Wine {
 
     @Override
     public String toString(){
-        return "id: " + wine_id + "Wine name: " + name + " with the designation: " + designation + " has the grape variety id: " + grape_variety_id;
+        return "Wine id: '" + wine_id + "' name: '" + name + "' with the designation: '" + designation + "' has the grape variety id: '" + grape_variety_id + "'";
     }
 }

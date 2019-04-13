@@ -1,11 +1,13 @@
 import exercise3.JDBCConnector;
 import exercise4.BatchQuery;
 import exercise5.CustomQuery;
+import exercise6.PseudoORM;
+import exercise6.User;
+import exercise6.Wine;
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -30,9 +32,12 @@ public class AssignmentSolver {
 
     public static void do_exercise(int number, HashMap<String, String> expected_args) throws SQLException, IOException {
         switch(number){
+            case 0:
+                break;
             case 1:
-            case 2: System.out.println("No done yet D:");
-                    break;
+            case 2:
+                System.out.println("No done yet D:");
+                break;
             case 3:
                 JDBCConnector myJdbc = new JDBCConnector(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"), null);
                 ResultSet result3 = myJdbc.executeQuery("SELECT count(*) from user");
@@ -76,9 +81,34 @@ public class AssignmentSolver {
                 HashMap<String, Double> scores = myCustomQuery.getNumberOfReviewsAndMeanScore();
                 System.out.println("From " + scores.get("nreviews").intValue() + " scores with a mean of " + scores.get("mean"));
 
-                System.out.println("Wine id: " + wine_id + " has " + myCustomQuery.getScoreOfWineId(wine_id) + " in average");
+                System.out.println("N* id: " + wine_id + " has " + myCustomQuery.getScoreOfWineId(wine_id) + " in average");
                 break;
             case 6:
+                PseudoORM myPseudoORM = new PseudoORM(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                int wine_id_1 = 3209;
+                Wine wine_1 = myPseudoORM.getWine(wine_id_1);
+                System.out.println("If you look for wine id: " + wine_id_1 + " it returns: " + wine_1.toString());
+
+                Wine[] wine_list = myPseudoORM.getWinesByNameOrDescription(wine_1.getName(), null);
+                if(wine_list.length > 0)
+                    System.out.println("However there are others wines that share the name");
+                for(int i = 0; i < wine_list.length; i++)
+                    System.out.println("N* " + (i+1) + " " + wine_list[i].toString());
+
+                int wine_id_with_many_reviews = 40610;
+                wine_1 = myPseudoORM.getWine(wine_id_with_many_reviews);
+                wine_list = myPseudoORM.getWinesByNameOrDescription(wine_1.getName(), null);
+                if(wine_list.length > 0)
+                    System.out.println("However there are others wines that share the name");
+                for(int i = 0; i < wine_list.length; i++)
+                    System.out.println("N* " + (i+1) + " " + wine_list[i].toString());
+
+                User[] user_list = myPseudoORM.getUsersThatHaveReviewOfWine(wine_id_with_many_reviews);
+                System.out.println("The following users (" + user_list.length + ") have written a review of: " + wine_1.toString());
+                for(int i = 0; i < user_list.length; i++)
+                    System.out.println("N* " + (i+1) + " " + user_list[i].toString());
+
+                break;
             case 7:
             case 8:
             case 9: System.out.println("No done yet D:");
