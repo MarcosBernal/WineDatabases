@@ -1,53 +1,41 @@
+# Overview
+
+This project has been done to fulfill the requirements specified in the file [enunciado_practica_bbdd_1819.pdf](/enunciado_practica_bbdd_1819.pdf). 
+
 ## Requirements
 
 - Java 8
-- Docker (or workbench application) 
+- Docker and mysql client (*or* workbench application) 
+- bash (required for the scripts otherwise IDE should be used)
 
 ## Environment
 
-Launch environment:
+The following steps are performed in a UNIX-based system.
 
-Mysql server:
+#### Mysql server:
 
-    docker run -d --rm -e MYSQL_ROOT_PASSWORD=secret -p 3306:3306 mysql
+    bash deployment.sh
+
+Deploys a dockerized mysql server with the password **secret** and load some sql to create tables and insert data (check src/exercise1 and src/exercise2).
         
-Mysql client:
-    
+#### Mysql client:
+
+mycli [recommended]
+
     pip install --user mycli
     mycli -u root -h localhost -psecret
 
-## Compile exercises
+mysql standard client
 
-With the ide (skip this step) or with the terminal:
-
-    mkdir build
-    
-    # Compile the java files and place the class object into a similar structure in the build folder
-    javac -d ./build -cp mysql-connector-java-8.0.15.jar src/exercise*/*.java src/AssignmentSolver.java
-
+    mysql -u root --protocol=tcp -h localhost -psecret
 
 ## Execution
 
-Using an IDE, tool such as maven. 
+The following steps are performed in a UNIX-based system.
 
-With the classpath:
+#### Compiling & execution
 
-    java -cp mysql-connector-java-8.0.15.jar:build/ AssignmentSolver localhost secret cataVino
-
-
-## Exercises
-
-Deployment:
+    bash executeExercises.sh
     
-    bash deployment.sh
-    
-Test exercises:
-    
-    bash execute.sh
-
-#### Exercise 1
-...
-#### Exercise 2
-...
-#### Exercise 3
-...
+It compiled the java code and launch the application to interact with the console in order to
+execute any of the exercises required.

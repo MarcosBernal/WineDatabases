@@ -14,16 +14,16 @@ else
     echo "Mysql already up!"
 fi
 
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} < src/exercise1/create_tables.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} < ${DIR_PATH}/src/exercise1/create_tables.sql
 echo "Created Tables!!"
 
 
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/country.sql
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/grape_variety.sql
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/region.sql
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/taster.sql
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/user.sql
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/winery.sql
-mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < src/exercise2/wine.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/country.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/grape_variety.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/region.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/taster.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/user.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/winery.sql
+mysql -h localhost --protocol=tcp -u root -p${PASSWD} ${DDBB} < ${DIR_PATH}/src/exercise2/wine.sql
 
 echo "Filled tables"

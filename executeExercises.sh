@@ -5,5 +5,7 @@ PASSWD=secret
 C_NAME=mysql_server
 DDBB=cataVino
 
-javac -d ./build -cp mysql-connector-java-8.0.15.jar src/exercise*/*.java src/AssignmentSolver.java
-java -cp mysql-connector-java-8.0.15.jar:build/ AssignmentSolver localhost ${PASSWD} ${DDBB}
+mkdir -p ${DIR_PATH}/build
+
+javac -d ${DIR_PATH}/build -cp ${DIR_PATH}/mysql-connector-java-8.0.15.jar ${DIR_PATH}/src/exercise*/*.java ${DIR_PATH}/src/AssignmentSolver.java
+java -cp ${DIR_PATH}/mysql-connector-java-8.0.15.jar:${DIR_PATH}/build/ AssignmentSolver localhost ${PASSWD} ${DDBB}
