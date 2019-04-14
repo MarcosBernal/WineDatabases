@@ -32,6 +32,7 @@ public class BatchQuery extends JDBCConnector {
                 "(wine_id, taster_id, date, score, price) VALUES (?, ?, ?, ?, ?)"+
                     "ON DUPLICATE KEY UPDATE " +
                 "date = COALESCE( VALUES(date), date)," +
+                "score = COALESCE( VALUES(score), score)," +
                 "price = COALESCE( VALUES(price), price)");
 
         String line;

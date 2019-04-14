@@ -5,10 +5,12 @@ import exercise6.PseudoORM;
 import exercise6.User;
 import exercise6.Wine;
 import exercise7.OneTransactionPerWine;
+import exercise7.ScoringGuide;
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -83,6 +85,7 @@ public class AssignmentSolver {
                 System.out.println("From " + scores.get("nreviews").intValue() + " scores with a mean of " + scores.get("mean"));
 
                 System.out.println("N* id: " + wine_id + " has " + myCustomQuery.getScoreOfWineId(wine_id) + " in average");
+                System.out.println("Exercise 5 complete!!");
                 break;
             case 6:
                 PseudoORM myPseudoORM = new PseudoORM(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
@@ -108,11 +111,13 @@ public class AssignmentSolver {
                 System.out.println("The following users (" + user_list.length + ") have written a review of: " + wine_1.toString());
                 for(int i = 0; i < user_list.length; i++)
                     System.out.println("N* " + (i+1) + " " + user_list[i].toString());
-
+                System.out.println("Exercise 6 complete!!");
                 break;
             case 7:
                 OneTransactionPerWine myOneTransactioner = new OneTransactionPerWine(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
-                myOneTransactioner.parseCSVtoHashCodeWithWineAndGuides("src/exercise7/nuevas_catas.csv" , ";");
+                HashMap<Wine, ArrayList<ScoringGuide>> scoresToInsert = myOneTransactioner.parseCSVtoHashCodeWithWineAndGuides("src/exercise7/nuevas_catas.csv" , ";");
+                myOneTransactioner.insertMultipleScores(scoresToInsert);
+                System.out.println("Exercise 7 complete!!");
 
                 break;
             case 8:

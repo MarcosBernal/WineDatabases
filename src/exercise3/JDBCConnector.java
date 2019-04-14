@@ -35,6 +35,7 @@ public class JDBCConnector {
             result = stmt.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
+            System.exit(1);
         }
         return result; //need to do a close after iterating over the resultset
     }
