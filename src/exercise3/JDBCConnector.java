@@ -34,6 +34,7 @@ public class JDBCConnector {
             Statement stmt = this.conn.createStatement();
             result = stmt.executeQuery(query);
         } catch (SQLException e) {
+            System.err.println("Failed query to process: \n'" + query + "'\n");
             e.printStackTrace();
             System.exit(1);
         }

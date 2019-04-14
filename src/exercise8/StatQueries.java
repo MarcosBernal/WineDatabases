@@ -30,22 +30,17 @@ public class StatQueries extends JDBCConnector {
             return user_list.toArray(new User[user_list.size()]);
     }
 
-    @Override
-    public ResultSet executeQuery(String query){
-        System.out.println("Query to execute: '" + query + "'");
-        return super.executeQuery(query);
-    }
-
     public User[] getUserWithNoReviews(){
         ResultSet result = this.executeQuery("SELECT u.user_id, u.name FROM user u " +
                 "LEFT JOIN wine_user_review r ON r.user_id = u.user_id WHERE r.user_id is NULL");
         return resultSetToUserArray(result);
     }
 
-    public User[] getUsersWithMostReviews(){
+    public User[] getUsersWithMostReviewsInYear(int year){
         ResultSet result = this.executeQuery(
                 "SELECT u.* FROM " +
-                    "(SELECT user_id, RANK() OVER( ORDER BY count(score)DESC) as ranked, count(score) as reviews FROM wine_user_review r GROUP BY r.user_id) sub" +
+                    "(SELECT user_id, RANK() OVER( ORDER BY count(score)DESC) as ranked, count(score) as reviews FROM " +
+                        "wine_user_review r WHERE YEAR(date) = '" + year + "' GROUP BY r.user_id) sub " +
                 "JOIN user u ON u.user_id = sub.user_id WHERE sub.ranked = 1");
         return resultSetToUserArray(result);
     }
@@ -54,7 +49,7 @@ public class StatQueries extends JDBCConnector {
         ResultSet result = this.executeQuery(
                 "SELECT u.* FROM " +
                         "(SELECT r.user_id, SUM(ABS(g.score - r.score)) as diff_in_score, RANK() OVER( ORDER BY SUM(ABS(g.score - r.score)) ASC) as ranked FROM wine_user_review r " +
-                        "JOIN (SELECT wine_id, avg(score) as score FROM wine_scoring_guide GROUP BY wine_id) g ON r.wine_id = g.wine_id GROUP BY r.user_id) sub" +
+                        "JOIN (SELECT wine_id, avg(score) as score FROM wine_scoring_guide GROUP BY wine_id) g ON r.wine_id = g.wine_id GROUP BY r.user_id) sub " +
                         "JOIN user u ON u.user_id = sub.user_id WHERE sub.ranked = 1");
         return resultSetToUserArray(result);
     }

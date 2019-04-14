@@ -6,6 +6,7 @@ import exercise6.User;
 import exercise6.Wine;
 import exercise7.OneTransactionPerWine;
 import exercise7.ScoringGuide;
+import exercise8.StatQueries;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -39,7 +40,7 @@ public class AssignmentSolver {
                 break;
             case 1:
             case 2:
-                System.out.println("No done yet D:");
+                System.out.println("Execute in a terminal: \n\tsh deployment.sh\n");
                 break;
             case 3:
                 JDBCConnector myJdbc = new JDBCConnector(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"), null);
@@ -121,8 +122,35 @@ public class AssignmentSolver {
 
                 break;
             case 8:
-            case 9: System.out.println("No done yet D:");
-                    break;
+                StatQueries myStatQueries = new StatQueries(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                User[] users;
+                users = myStatQueries.getUserWithNoReviews();
+                System.out.println("There are " + users.length + " users with no wine review");
+                for(User user : users)
+                    System.out.println(">>" + user.toString());
+
+                int year2018 = 2018;
+                users = myStatQueries.getUsersWithMostReviewsInYear(2018);
+                System.out.println("There are " + users.length + " users the highest number of reviews in " + year2018);
+                for(User user : users)
+                    System.out.println(">>" + user.toString());
+
+                String[] wineries = myStatQueries.getMultinationalWineries();
+                System.out.println("There are " + users.length + " wineries that sell in more than one country");
+                for(String winery : wineries)
+                    System.out.println(">>" + winery);
+
+                users = myStatQueries.getUsersWithTheClosestReviewsToGuide();
+                System.out.println("There are " + users.length + " users with the closest reviews to the guide");
+                for(User user : users)
+                    System.out.println(">>" + user.toString());
+
+                System.out.println("Exercise 8 complete!!");
+                break;
+            case 9:
+                System.out.println("Exercise 9 complete!!");
+                System.out.println("Do not you see it :D?");
+                break;
 
         }
     }

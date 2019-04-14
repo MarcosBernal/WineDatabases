@@ -1,7 +1,5 @@
 package exercise7;
 
-import exercise3.JDBCConnector;
-import exercise4.BatchQuery;
 import exercise6.PseudoORM;
 import exercise6.Wine;
 
@@ -9,20 +7,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-//title; variety; winery; country; description; designation; points; price; province; region; area;
-//taster_name; taster_twitter_handle
-
-//region
-//taster -> taster_name; taster_twitter_handle
-//wine_scoring_guide -> points; price; date
-//
 public class OneTransactionPerWine extends PseudoORM {
 
     public OneTransactionPerWine(String host, String password, String database) {
