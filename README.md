@@ -41,3 +41,18 @@ It compiles the java code and launches the application to interact through the c
 execute any of the exercises.
 
 It uses the mysql-connector located in the root of the repo.
+
+
+## Additional queries
+
+To practice SQL the following queries can be developed:
+
+- How many users have given a review (or more)? How many have given only two reviews?
+
+- Which is the wine with best guide score? And the one with more user reviews?
+
+- Which are the name of the wineries that have the highest user score? And the ones with worse guide score?
+
+- How many wines have the same guide score and review score?
+
+- Which is the avg. score of Spain regarding the wine scoring guide? And the guide score of each region?
