@@ -12,7 +12,7 @@ public class Wine {
     private int winery_id;
     private int region_id;
 
-    public Wine(int wine_id, String name, String description, int grape_variety_id, String designation, int winery_id, int region_id){
+    public Wine(int wine_id, String name, String description, int grape_variety_id, String designation, int winery_id, int region_id) {
         this.wine_id = wine_id;
         this.name = name;
         this.description = description;
@@ -117,7 +117,35 @@ public class Wine {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Wine id: '" + wine_id + "' name: '" + name + "' with the designation: '" + designation + "' has the grape variety id: '" + grape_variety_id + "'";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((name == null) ? 0 : name.hashCode())
+                + ((description == null) ? 0 : description.hashCode())
+                + ((designation == null) ? 0 : designation.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final Wine other = (Wine) obj;
+        if (name == null || designation == null || description == null) {
+            if (other.name != null || other.designation != null || other.description == null)
+                return false;
+        } else if (!name.equals(other.name) || !description.equals(other.description) || !designation.equals(other.designation))
+            return false;
+        return true;
     }
 }

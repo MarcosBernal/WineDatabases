@@ -4,6 +4,7 @@ import exercise5.CustomQuery;
 import exercise6.PseudoORM;
 import exercise6.User;
 import exercise6.Wine;
+import exercise7.OneTransactionPerWine;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -110,6 +111,10 @@ public class AssignmentSolver {
 
                 break;
             case 7:
+                OneTransactionPerWine myOneTransactioner = new OneTransactionPerWine(expected_args.get("host"), expected_args.get("password"), expected_args.get("database"));
+                myOneTransactioner.parseCSVtoHashCodeWithWineAndGuides("src/exercise7/nuevas_catas.csv" , ";");
+
+                break;
             case 8:
             case 9: System.out.println("No done yet D:");
                     break;

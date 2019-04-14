@@ -16,7 +16,7 @@ The following steps are performed in a UNIX-based system.
 
     bash deployment.sh
 
-Deploys a dockerized mysql server with the password **secret** and load some sql to create tables and insert data (check src/exercise1 and src/exercise2).
+Deploys a dockerized mysql server with the password '**secret**' and load some sql to create tables and insert data (check src/exercise1 and src/exercise2).
         
 #### Mysql client:
 
@@ -37,5 +37,7 @@ The following steps are performed in a UNIX-based system.
 
     bash executeExercises.sh
     
-It compiled the java code and launch the application to interact with the console in order to
-execute any of the exercises required.
+It compiles the java code and launches the application to interact through the console in order to
+execute any of the exercises.
+
+It uses the mysql-connector located in the root of the repo.

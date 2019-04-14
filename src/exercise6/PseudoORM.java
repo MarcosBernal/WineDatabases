@@ -31,7 +31,11 @@ public class PseudoORM extends CustomQuery{
         } catch (SQLException e) {
             return null;
         }
-        return wine_list.toArray(new Wine[wine_list.size()]);
+
+        if (wine_list.isEmpty())
+            return null;
+        else
+            return wine_list.toArray(new Wine[wine_list.size()]);
     }
 
     public User[] getUsersThatHaveReviewOfWine(int wine_id){
